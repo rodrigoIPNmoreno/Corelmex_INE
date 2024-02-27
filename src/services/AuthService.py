@@ -16,9 +16,8 @@ class AuthService():
             with connection.cursor() as cursor:
                 cursor.execute('call sp_verifyIdentity(%s, %s)', (user.username, user.password))
                 row = cursor.fetchone()
-                print(row)
                 if row != None:
-                    authenticated_user = User(int(row[0]), row[1], None)
+                    authenticated_user = User(int(row[0]), row[1], None, row[2])
 
             connection.close()
             return authenticated_user

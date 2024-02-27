@@ -17,7 +17,7 @@ def login():
     username = request.json['username']
     password = request.json['password']
 
-    _user = User(0, username, password)
+    _user = User(0, username, password, None)
     authenticated_user = AuthService.login_user(_user)
     if (authenticated_user != None):
         encoded_token = Security.generate_token(authenticated_user)

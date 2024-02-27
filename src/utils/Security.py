@@ -16,7 +16,7 @@ class Security():
             'iat': datetime.datetime.now(tz=cls.tz),
             'exp': datetime.datetime.now(tz=cls.tz) + datetime.timedelta(minutes=60),
             'username': authenticated_user.username,
-            'roles': ['Administrator', 'Editor'] # ---->> estos roles en un futuro tiene que darse desde la base de datos
+            'roles': eval(authenticated_user.roles) # ---->> regresa como ejemplo la lista de roles permitidos para el usuario ['Administrator', 'Editor']
         }
         return jwt.encode(payload, cls.secret, algorithm="HS256")
     
@@ -30,7 +30,6 @@ class Security():
                 try:
                     payload = jwt.decode(encoded_token, cls.secret, algorithms=["HS256"])
                     roles = list(payload['roles'])
-
                     if 'Administrator' in roles:
                         return True
                     return False
